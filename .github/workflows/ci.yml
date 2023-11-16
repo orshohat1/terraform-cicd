@@ -1,4 +1,4 @@
-name: Terraform ci
+name: Terraform CI
 
 on:
   workflow_dispatch:
