@@ -1,0 +1,48 @@
+name: Main Branch Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      cleanup:
+        description: 'Run cleanup step'
+        required: false
+        default: 'false'
+  push:
+    branches:
+      - main
+
+env:
+  ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+  ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+  ARM_TENANT_ID: ${{ secrets.TENANT_ID }} 
+  ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+
+jobs:
+    apply:
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      runs-on: self-hosted
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+        
+          # Authenticating to Azure
+        - name: Azure Login
+          run: az login --service-principal -u ${{ secrets.CLIENT_ID }} -p ${{ secrets.CLIENT_SECRET }} --tenant ${{ secrets.TENANT_ID }}
+        
+        - name: Terraform Init
+          run: terraform init
+        
+        - name: Terraform Apply
+          run: terraform apply -auto-approve
+  
+    cleanup:
+      runs-on: ubuntu-latest
+      if: ${{ github.event.inputs.cleanup == 'true' }}
+      steps:
+        - name: Azure Login
+          run: az login --service-principal -u ${{ secrets.CLIENT_ID }} -p ${{ secrets.CLIENT_SECRET }} --tenant ${{ secrets.TENANT_ID }}
+        
+        - name: Terraform Destroy
+          run: terraform destroy -auto-approve
+  
+          
