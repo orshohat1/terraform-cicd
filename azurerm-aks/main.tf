@@ -56,7 +56,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     for_each = var.ingress_application_gateway.enabled == true ? [1] : []
 
     content {
-      gateway_id = var.ingress_application_gateway.gateway_id
+      subnet_id = var.ingress_application_gateway.subnet_id
     }
   }
 

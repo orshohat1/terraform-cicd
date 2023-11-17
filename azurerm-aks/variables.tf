@@ -116,11 +116,11 @@ variable "ingress_application_gateway" {
   description = "Specifies the Application Gateway ingress controller addon configuration"
   type = object({
     enabled    = bool
-    gateway_id = string
+    subnet_id = string
   })
   default = {
     enabled    = true
-    gateway_id = "/subscriptions/8c58a6e3-68a7-441d-b4a0-4f98dfdfc6f9/resourceGroups/or-test-rg/providers/Microsoft.Network/applicationGateways/or-test-appgw"
+    subnet_id = "/subscriptions/8c58a6e3-68a7-441d-b4a0-4f98dfdfc6f9/resourceGroups/cloud-shell-storage-westeurope/providers/Microsoft.Network/virtualNetworks/cloud-shell-storage-westeurope-vnet/subnets/default"
   }
 }
 
