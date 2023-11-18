@@ -17,12 +17,9 @@ This workflow performs the Terraform configuration checks, validation, and gener
 ## Main Branch Deployment Workflow
 
 ### Description:
-This workflow applies Terraform changes to the main branch and allows cleanup based on specific triggers.
+This workflow applies Terraform changes to the main branch.
 
 ### Steps:
 - **Apply:**
   - Executes Terraform apply on the main branch.
-
-- **Cleanup:**
-  - Destroys Terraform resources if triggered with the cleanup option set to true.
 
